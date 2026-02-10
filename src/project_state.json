@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 3,
+  "summary": "New project",
+  "architectural_notes": [],
+  "known_issues": [],
+  "isFixRequest": true,
+  "existing_features": [
+    {
+      "id": "feature-remove-the-welcome-back-role-selection-management-reception-and-passcode-ui-from-the-login-screen-so-unauthenticated-users-only-see-a-direct-login-with-internet-identity-action-without-choosing-a-role",
+      "title": "Remove the “Welcome Back” role selection (Management/Reception) and passcode UI from the login screen, so unauthenticated users only see a direct “Login with Internet Identity” action without choosing a role.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-login-flow-to-no-longer-depend-on-storing-a-pending-role-request-or-selected-role-label-in-sessionstorage-when-the-user-clicks-login-i-e-do-not-call-storependingrolerequest-or-storeselectedrolelabel-as-part-of-login",
+      "title": "Update the login flow to no longer depend on storing a pending role request or selected role label in sessionStorage when the user clicks login (i.e., do not call storePendingRoleRequest or storeSelectedRoleLabel as part of login).",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-navigation-logged-in-as-label-to-rely-on-the-backend-role-via-getroledisplaylabel-and-not-on-any-previously-selected-role-label-stored-in-sessionstorage",
+      "title": "Update the navigation “Logged in as” label to rely on the backend role (via getRoleDisplayLabel) and not on any previously selected role label stored in sessionStorage.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Remove the post-login \"Welcome back\" role selection page (management/reception role picker) so users don't have to select a role screen.",
+      "reqIds": [],
+      "status": "pending"
+    }
+  ],
+  "projectName": "Remove post-login role selection (Welcome Back) screen",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

@@ -1,0 +1,58 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Simplify login by removing role selection and session-based role label dependencies",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "summary": "Remove the Welcome Back role selection + passcode UI so logged-out users only see a direct Internet Identity login action with a loading state.",
+      "acceptanceCriteria": [
+        "When logged out, the login page no longer renders the role radio buttons for Management/Reception.",
+        "When logged out, the login page no longer renders a passcode field or any validation messages related to role selection/passcode.",
+        "The login page still provides a working “Login with Internet Identity” button and shows a loading state while logging in."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/auth/LoginPage.tsx",
+          "operation": "modify",
+          "description": "Remove the role RadioGroup, passcode Input, and related validation state/handlers; keep a single “Login with Internet Identity” button wired directly to Internet Identity login and preserve the existing loading UI. Keep optional display of any stored role-claim error message but ensure it does not require any role/passcode UI to proceed."
+        }
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "summary": "Stop the login flow from writing selected role labels or pending role requests into sessionStorage (no storePendingRoleRequest/storeSelectedRoleLabel on login).",
+      "acceptanceCriteria": [
+        "Clicking the login button triggers Internet Identity login without writing selected role label or pending role request values to sessionStorage.",
+        "Existing sessionStorage error handling for role-claim errors does not block login and does not require role selection to proceed."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/auth/LoginPage.tsx",
+          "operation": "modify",
+          "description": "Remove imports and calls to storePendingRoleRequest and storeSelectedRoleLabel; remove AppRole mapping logic that existed solely to build the pending role request; ensure handleLogin only triggers Internet Identity login and does not depend on sessionStorage role-related values."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Decouple post-login behavior from sessionStorage-based pending role claims by removing the PostLoginRoleClaimGate from the authenticated render path (and its import), so login no longer depends on a pending role request existing to proceed."
+        }
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "summary": "Update the navbar “Logged in as” label to use backend role mapping via getRoleDisplayLabel only (no sessionStorage selected role label fallback).",
+      "acceptanceCriteria": [
+        "After login, the navbar’s “Logged in as” badge is derived from the backend user role mapping (e.g., Director/Management/Reception) and does not require getSelectedRoleLabel to show a label.",
+        "No UI depends on the removed role selection step to display the user’s role label."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/layout/AppNav.tsx",
+          "operation": "modify",
+          "description": "Remove getSelectedRoleLabel usage and fallback logic; compute the “Logged in as” label solely from getRoleDisplayLabel(role) when authenticated, ensuring the displayed label reflects the backend role mapping."
+        }
+      ]
+    }
+  ]
+}

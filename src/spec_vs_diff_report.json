@@ -1,0 +1,61 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-10T11:29:46.184Z",
+  "summary": "All three requested requirements (removing role/passcode selection UI, eliminating sessionStorage writes on login, and deriving the navbar role label from backend role mapping) appear to be implemented. The diff also includes multiple unrelated feature changes (reception forms, reports, visit list admin actions, footer link changes, podcast form behavior, and new URL/session param utilities) that were not requested and contradict the stated non-goals.",
+  "missing_requirements": [],
+  "hallucinated_features": [
+    {
+      "description": "Reception intake form changes adding new client information fields (Home Address, Email Address, Identification Number) and other conditional UI behavior",
+      "reason": "Not requested; explicitly called out as a non-goal to avoid redesigning unrelated pages (reception forms).",
+      "evidence": [
+        "frontend-file-summaries.txt (frontend/src/pages/reception/ReceptionVisitFormPage.tsx summary)",
+        "frontend-file-summaries.txt (frontend/src/pages/reception/VisitDetailsPage.tsx summary)"
+      ]
+    },
+    {
+      "description": "Podcast details page behavior that reads and applies guest type prefill from sessionStorage",
+      "reason": "Not requested and introduces new sessionStorage-dependent behavior unrelated to removing role selection from login.",
+      "evidence": [
+        "frontend-file-summaries.txt (frontend/src/pages/services/PodcastDetailsPage.tsx summary)"
+      ]
+    },
+    {
+      "description": "Reception visits list changes including currency-aware payment formatting and an admin-only \"Clear History\" button with confirmation and toasts that deletes all records",
+      "reason": "Not requested; falls under non-goal of not redesigning unrelated pages (reception/reports) and adds new destructive admin behavior.",
+      "evidence": [
+        "frontend-file-summaries.txt (frontend/src/pages/reception/ReceptionVisitsListPage.tsx summary)"
+      ]
+    },
+    {
+      "description": "Reports/monthly analytics dashboard changes including currency filter and currency-specific totals/cards",
+      "reason": "Not requested; explicitly a non-goal to avoid redesigning unrelated pages (reports).",
+      "evidence": [
+        "frontend-file-summaries.txt (frontend/src/pages/reports/MonthlyReportsPage.tsx summary)"
+      ]
+    },
+    {
+      "description": "Footer/AppLayout change updating the Facebook link to https://www.facebook.com/danicastudios/ and opening it in a new tab",
+      "reason": "Not requested and unrelated to the login/role-selection removal work.",
+      "evidence": [
+        "frontend-file-summaries.txt (frontend/src/components/layout/AppLayout.tsx summary)"
+      ]
+    },
+    {
+      "description": "New/expanded URL parameter utilities that persist URL parameters into sessionStorage (storeSessionParameter/getPersistedUrlParameter etc.)",
+      "reason": "Not requested by the BuildRequest; adds new sessionStorage persistence utilities outside the specified login/role-label scope.",
+      "evidence": [
+        "frontend/src/utils/urlParams.ts"
+      ]
+    }
+  ],
+  "confidence": 0.74,
+  "changed_files": [
+    "frontend-file-summaries.txt",
+    "frontend/src/App.tsx",
+    "frontend/src/components/layout/AppNav.tsx",
+    "frontend/src/pages/auth/LoginPage.tsx",
+    "frontend/src/utils/urlParams.ts",
+    "project_state.json"
+  ]
+}

@@ -1,0 +1,82 @@
+{
+  "kind": "build_request",
+  "title": "Remove post-login role selection (Welcome Back) screen",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "text": "Remove the “Welcome Back” role selection (Management/Reception) and passcode UI from the login screen, so unauthenticated users only see a direct “Login with Internet Identity” action without choosing a role.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "looks like the welcoe back page where we need to select role, management and reception, please remove it"
+        ]
+      },
+      "acceptanceCriteria": [
+        "When logged out, the login page no longer renders the role radio buttons for Management/Reception.",
+        "When logged out, the login page no longer renders a passcode field or any validation messages related to role selection/passcode.",
+        "The login page still provides a working “Login with Internet Identity” button and shows a loading state while logging in."
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Update the login flow to no longer depend on storing a pending role request or selected role label in sessionStorage when the user clicks login (i.e., do not call storePendingRoleRequest or storeSelectedRoleLabel as part of login).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "please remove it"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Clicking the login button triggers Internet Identity login without writing selected role label or pending role request values to sessionStorage.",
+        "Existing sessionStorage error handling for role-claim errors does not block login and does not require role selection to proceed."
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Update the navigation “Logged in as” label to rely on the backend role (via getRoleDisplayLabel) and not on any previously selected role label stored in sessionStorage.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "remove it"
+        ]
+      },
+      "acceptanceCriteria": [
+        "After login, the navbar’s “Logged in as” badge is derived from the backend user role mapping (e.g., Director/Management/Reception) and does not require getSelectedRoleLabel to show a label.",
+        "No UI depends on the removed role selection step to display the user’s role label."
+      ]
+    }
+  ],
+  "constraints": [
+    "Do not edit files under frontend/src/components/ui (shadcn UI components are read-only).",
+    "Do not modify immutable hook files: frontend/src/hooks/useInternetIdentity.ts(x), frontend/src/hooks/useActor.ts, frontend/src/main.tsx."
+  ],
+  "nonGoals": [
+    "Changing backend role/authorization logic or data schema.",
+    "Adding new authentication providers or non-Internet Identity login methods.",
+    "Redesigning unrelated pages (reception forms, reports, role management)."
+  ],
+  "imageRequirements": {
+    "required": [],
+    "edits": []
+  },
+  "userProfileUpdate": {
+    "goalsToAdd": [],
+    "goalsToRemove": [],
+    "preferencesToAdd": [],
+    "preferencesToRemove": [],
+    "miscToAdd": [],
+    "miscToRemove": [],
+    "fieldsToSet": {},
+    "fieldsToDelete": []
+  }
+}
